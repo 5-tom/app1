@@ -1,0 +1,39 @@
+{
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"test": "vitest ./tests",
+		"build": "vite build",
+		"api": "nodemon --watch ./api -e \"*\" --exec \"npm run api:build && node netlify/functions/api.js\"",
+		"api:build": "esbuild ./api/server.js --bundle --packages=external --format=esm --outfile=./netlify/functions/api.js"
+	},
+	"dependencies": {
+		"@clerk/clerk-react": "latest",
+		"@clerk/clerk-sdk-node": "^4.13.11",
+		"@emotion/react": "latest",
+		"@emotion/styled": "latest",
+		"@mui/material": "latest",
+		"dotenv": "^16.4.5",
+		"express": "latest",
+		"multer": "latest",
+		"react": "latest",
+		"react-dom": "latest",
+		"react-router-dom": "latest",
+		"serverless-http": "latest",
+		"swagger-ui-express": "latest",
+		"zod": "latest",
+		"zodix": "latest"
+	},
+	"devDependencies": {
+		"@testing-library/react": "latest",
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
+		"@vitejs/plugin-react": "latest",
+		"esbuild": "latest",
+		"jsdom": "latest",
+		"nodemon": "latest",
+		"typescript": "latest",
+		"vite": "latest",
+		"vitest": "latest"
+	}
+}
