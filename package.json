@@ -9,11 +9,11 @@
 	},
 	"dependencies": {
 		"@clerk/clerk-react": "latest",
-		"@clerk/clerk-sdk-node": "^4.13.11",
+		"@clerk/clerk-sdk-node": "latest",
 		"@emotion/react": "latest",
 		"@emotion/styled": "latest",
 		"@mui/material": "latest",
-		"dotenv": "^16.4.5",
+		"dotenv": "latest",
 		"express": "latest",
 		"multer": "latest",
 		"react": "latest",
