@@ -8,9 +8,9 @@ export default function Home() {
 	const { getToken } = useAuth();
 
 	const [open, setOpen] = useState(false);
-	const [request, setRequest] = useState({
-		body: new FormData(),
-		route: "",
+	const [form, setForm] = useState({
+		action: "",
+		data: new FormData(),
 		schema: z.object({})
 	});
 	const initErrors: {
@@ -27,7 +27,7 @@ export default function Home() {
 
 	async function submit() {
 		setErrors(initErrors);
-		const result = await parseFormSafe(request.body, request.schema);
+		const result = await parseFormSafe(form.data, form.schema);
 		if (!result.success) {
 			const fResult: { [key: string]: Array<string> } =
 				result.error.flatten().fieldErrors;
@@ -39,9 +39,9 @@ export default function Home() {
 			setOpen(false);
 			return;
 		}
-		fetch(request.route, {
+		fetch(form.action, {
 			method: "post",
-			body: request.body,
+			body: form.data,
 			headers: { Authorization: `Bearer ${await getToken()}` }
 		}).then(async function (res) {
 			setResponse(await res.json());
@@ -55,9 +55,9 @@ export default function Home() {
 			<form
 				onSubmit={function (e) {
 					e.preventDefault();
-					setRequest({
-						body: new FormData(e.currentTarget),
-						route: "/api/form",
+					setForm({
+						action: "/api/form",
+						data: new FormData(e.currentTarget),
 						schema: z.object({ fname: z.string().email() })
 					});
 					setOpen(true);
@@ -68,6 +68,7 @@ export default function Home() {
 					required
 					error={errors.fname ? true : false}
 					helperText={errors.fname ?? errors.fname}
+					placeholder="email"
 				/>
 				<Button type="submit">Submit</Button>
 			</form>

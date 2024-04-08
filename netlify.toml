@@ -3,7 +3,7 @@
 	publish = "dist"
 
 [functions]
-	external_node_modules = ["@clerk/clerk-sdk-node", "dotenv", "express", "serverless-http", "multer"]
+	external_node_modules = ["@clerk/clerk-sdk-node", "dotenv", "express", "helmet", "serverless-http", "multer"]
 	node_bundler = "esbuild"
 
 [[redirects]]

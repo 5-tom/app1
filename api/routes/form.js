@@ -9,7 +9,7 @@ router.use(ClerkExpressRequireAuth());
 router.post("/", multer().none(), async function (req, res) {
 	const { fname } = req.body;
 	try {
-		const fetchRes = await fetch(`${process.env.ATLAS_URL}/insertOne`, {
+		const fetchRes = await fetch(`${process.env.ATLAS_URL}/action/insertOne`, {
 			method: "post",
 			headers: {
 				"api-key": process.env.ATLAS_API,
