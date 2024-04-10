@@ -1,7 +1,10 @@
-import { SignUp as ClerkSignUp, useAuth } from "@clerk/clerk-react";
+import {
+	ClerkLoaded,
+	ClerkLoading,
+	SignUp as ClerkSignUp
+} from "@clerk/clerk-react";
 
 export default function SignUp() {
-	const { isLoaded } = useAuth();
 	return (
 		<div
 			style={{
@@ -11,8 +14,10 @@ export default function SignUp() {
 				height: "calc(100vh - 40px)"
 			}}
 		>
-			{!isLoaded && "Loading..."}
-			<ClerkSignUp />
+			<ClerkLoading>Loading...</ClerkLoading>
+			<ClerkLoaded>
+				<ClerkSignUp />
+			</ClerkLoaded>
 		</div>
 	);
 }
