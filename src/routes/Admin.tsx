@@ -1,20 +1,17 @@
-import { useAuth } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 export default function Admin() {
+	const [member, admin]: Array<boolean> = useOutletContext();
 	const navigate = useNavigate();
-	const { has } = useAuth();
-	const [isAdmin, setIsAdmin] = useState(false);
+
 	useEffect(() => {
-		if (has({ role: "org:admin" })) {
-			setIsAdmin(true);
-		} else {
+		if (!admin) {
 			return navigate("/home?403=true");
 		}
 	}, []);
 
-	if (isAdmin) {
+	if (admin) {
 		return (
 			<>
 				<h3 style={{ fontStyle: "italic" }}>Admin</h3>
