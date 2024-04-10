@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function Admin() {
-	const [member, admin]: Array<boolean> = useOutletContext();
+	const [member, admin, setOpen]: Array<any> = useOutletContext();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!admin) {
-			return navigate("/home?403=true");
+			setOpen(true);
+			return navigate("/");
 		}
 	}, []);
 

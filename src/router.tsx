@@ -6,7 +6,6 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import Root from "./routes/root";
-import Home from "./routes/Home";
 import Admin from "./routes/Admin";
 
 const router = createBrowserRouter([
@@ -23,10 +22,6 @@ const router = createBrowserRouter([
 		element: <Root />,
 		errorElement: <ErrorPage />,
 		children: [
-			{
-				path: "/home",
-				element: <Home />
-			},
 			{
 				path: "/admin",
 				element: <Admin />

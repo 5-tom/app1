@@ -9,12 +9,12 @@ router.use("/form", form);
 
 router.use(json());
 router.post("/create-organization-membership", async function (req, res) {
-	const { organizationId, userId, role } = req.body;
+	const { userId } = req.body;
 	try {
 		await clerkClient.organizations.createOrganizationMembership({
-			organizationId,
+			organizationId: process.env.VITE_DEFAULT_ORG_ID,
 			userId,
-			role
+			role: "org:member"
 		});
 		return res.status(200).send({ success: true });
 	} catch (err) {
