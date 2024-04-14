@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function Admin() {
-	const [member, admin, setOpen]: Array<any> = useOutletContext();
+	const { admin, setOpen }: { [key: string]: any } = useOutletContext();
 	const navigate = useNavigate();
 
 	useEffect(() => {
