@@ -3,7 +3,7 @@ import {
 	RedirectToSignIn,
 	SignedIn,
 	SignedOut,
-	useAuth,
+	useUser,
 	UserButton
 } from "@clerk/clerk-react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -13,25 +13,19 @@ import Nav from "../components/Nav";
 import Home from "./Home";
 
 export default function Root() {
-	const { has, isLoaded, isSignedIn } = useAuth();
+	const { user } = useUser();
 
 	const location = useLocation();
 
-	const [member, setMember] = useState(false);
 	const [admin, setAdmin] = useState(false);
 
 	const [open, setOpen] = useState(false);
 
-	// useEffect(() => {
-	// 	if (isLoaded && isSignedIn) {
-	// 		if (has({ role: "org:member" })) {
-	// 			setMember(true);
-	// 		}
-	// 		if (has({ role: "org:admin" })) {
-	// 			setAdmin(true);
-	// 		}
-	// 	}
-	// });
+	useEffect(() => {
+		if (user?.publicMetadata.role === "admin") {
+			setAdmin(true);
+		}
+	});
 
 	return (
 		<>
@@ -39,12 +33,12 @@ export default function Root() {
 				<RedirectToSignIn />
 			</SignedOut>
 			<SignedIn>
-				<Nav />
+				<Nav admin={admin} setOpen={setOpen} />
 				<UserButton />
 				{location.pathname === "/" ? (
 					<Home />
 				) : (
-					<Outlet context={{ member, admin, setOpen }} />
+					<Outlet context={{ admin, setOpen }} />
 				)}
 				<Snackbar
 					open={open}
