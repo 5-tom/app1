@@ -4,20 +4,23 @@
 		"dev": "vite",
 		"test": "vitest ./tests",
 		"build": "vite build",
-		"api": "nodemon --watch ./api -e \"*\" --exec \"npm run api:build && node netlify/functions/api.js\"",
-		"api:build": "esbuild ./api/server.js --bundle --packages=external --format=esm --outfile=./netlify/functions/api.js"
+		"api": "nodemon --watch ./api -e \"*\" --exec \"npm run api:build && node ./netlify/functions/api.js\"",
+		"api:build": "esbuild ./api/server.js --bundle --packages=external --format=esm --outfile=./netlify/functions/api.js",
+		"compass": "mongodb-compass"
 	},
 	"dependencies": {
 		"@clerk/clerk-react": "latest",
 		"@clerk/clerk-sdk-node": "latest",
 		"@emotion/react": "latest",
 		"@emotion/styled": "latest",
+		"@fontsource/inter": "^5.0.18",
 		"@mui/material": "latest",
 		"cookies": "latest",
 		"dotenv": "latest",
 		"express": "latest",
 		"helmet": "latest",
 		"jsonwebtoken": "latest",
+		"mongoose": "latest",
 		"multer": "latest",
 		"react": "latest",
 		"react-dom": "latest",
@@ -29,10 +32,11 @@
 	},
 	"devDependencies": {
 		"@testing-library/react": "latest",
+		"@types/express": "latest",
 		"@vitejs/plugin-react": "latest",
 		"esbuild": "latest",
 		"jsdom": "latest",
-		"msw": "^2.2.13",
+		"msw": "latest",
 		"nodemon": "latest",
 		"vite": "latest",
 		"vitest": "latest"

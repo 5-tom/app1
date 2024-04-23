@@ -16,7 +16,7 @@ export default function Home() {
 	const initErrors: {
 		[key: string]: string | null;
 	} = {
-		fname: null
+		email: null
 	};
 	const [errors, setErrors] = useState(initErrors);
 	const [response, setResponse] = useState("");
@@ -58,23 +58,23 @@ export default function Home() {
 					setForm({
 						action: "/api/form",
 						data: new FormData(e.currentTarget),
-						schema: z.object({ fname: z.string().email() })
+						schema: z.object({ email: z.string().email() })
 					});
 					setOpen(true);
 				}}
 			>
 				<TextField
-					name="fname"
+					name="email"
 					required
-					error={errors.fname ? true : false}
-					helperText={errors.fname ?? errors.fname}
+					error={errors.email ? true : false}
+					helperText={errors.email ?? errors.email}
 					placeholder="email"
 				/>
 				<Button type="submit">Submit</Button>
 			</form>
 			<span>Response:</span>
 			<br />
-			{String(response["fname"])}
+			{String(response["email"])}
 			<Dialog onClose={handleClose} open={open}>
 				<Button onClick={submit}>Submit</Button>
 				<Button onClick={handleClose}>Close</Button>
