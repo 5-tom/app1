@@ -21,6 +21,17 @@ router.get("/foo", async (req, res) => {
 	}
 });
 
+router.get("/bar", async (req, res) => {
+	try {
+		const publicKey = process.env.CLERK_PEM_PUBLIC_KEY;
+		const sessToken = req.get("Authorization").split(" ")[1];
+		const decoded = jwt.verify(sessToken, publicKey);
+		const user = await clerkClient.users.getUser(decoded.sub);
+		console.log(user.publicMetadata.role);
+	} catch {}
+	return res.sendStatus(200);
+});
+
 router.use("/form", form);
 
 export default router;

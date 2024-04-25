@@ -5,6 +5,7 @@ import multer from "multer";
 import mongoose from "mongoose";
 import Email from "../models/Email";
 
+if (!process.env.DATABASE_URL) throw new Error("Missing DATABASE_URL");
 mongoose.connect(process.env.DATABASE_URL);
 
 const router = Router();
