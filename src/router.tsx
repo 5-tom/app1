@@ -7,6 +7,7 @@ import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import Root from "./routes/root";
 import Admin, { loader as adminLoader } from "./routes/Admin";
+import Home from "./routes/Home";
 
 const router = createBrowserRouter([
 	{
@@ -18,10 +19,14 @@ const router = createBrowserRouter([
 		element: <SignUp />
 	},
 	{
-		path: "/",
 		element: <Root />,
 		errorElement: <ErrorPage />,
 		children: [
+			{
+				path: "/",
+				element: <Home />,
+				index: true
+			},
 			{
 				path: "/admin",
 				element: <Admin />,

@@ -6,16 +6,13 @@ import {
 	useUser,
 	UserButton
 } from "@clerk/clerk-react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 
 import Nav from "../components/Nav";
-import Home from "./Home";
 
 export default function Root() {
 	const { user } = useUser();
-
-	const location = useLocation();
 
 	const [admin, setAdmin] = useState(false);
 
@@ -35,11 +32,7 @@ export default function Root() {
 			<SignedIn>
 				<Nav admin={admin} setOpen={setOpen} />
 				<UserButton />
-				{location.pathname === "/" ? (
-					<Home />
-				) : (
-					<Outlet context={{ admin, setOpen }} />
-				)}
+				<Outlet context={{ admin, setOpen }} />
 				<Snackbar
 					open={open}
 					autoHideDuration={1000}
