@@ -10,5 +10,5 @@ app.use(helmet());
 
 app.use("/api", api);
 
-app.listen(3000);
+app.listen(3000, () => console.log("running on 3000"));
 export const handler = serverless(app);
