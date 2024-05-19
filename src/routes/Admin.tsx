@@ -12,14 +12,14 @@ export async function loader() {
 }
 
 export default function Admin() {
-	const { admin, setOpen }: { [key: string]: any } = useOutletContext();
+	const { admin, toast }: { [key: string]: any } = useOutletContext();
 	const navigate = useNavigate();
 
 	const [rootDone, setRootDone] = useState(false);
 
 	useEffect(() => {
 		if (rootDone && !admin) {
-			setOpen(true);
+			toast.setOpen(true);
 			navigate("/");
 		}
 	}, [rootDone, admin]);

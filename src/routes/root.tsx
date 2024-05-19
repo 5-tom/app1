@@ -17,6 +17,10 @@ export default function Root() {
 	const [admin, setAdmin] = useState(false);
 
 	const [open, setOpen] = useState(false);
+	const toast = {
+		open,
+		setOpen
+	};
 
 	useEffect(() => {
 		if (user?.publicMetadata.role === "admin") {
@@ -30,9 +34,9 @@ export default function Root() {
 				<RedirectToSignIn />
 			</SignedOut>
 			<SignedIn>
-				<Nav admin={admin} setOpen={setOpen} />
+				<Nav admin={admin} toast={toast} />
 				<UserButton />
-				<Outlet context={{ admin, setOpen }} />
+				<Outlet context={{ admin, toast }} />
 				<Snackbar
 					open={open}
 					autoHideDuration={1000}

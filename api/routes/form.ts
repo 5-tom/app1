@@ -19,8 +19,7 @@ router.post("/", multer().none(), async function (req, res) {
 		});
 		const a = await newDoc.save();
 		console.log(a);
-		//return res.send(await fetchRes.json());
-		return res.sendStatus(200);
+		return res.send(a);
 	} catch {
 		return res.sendStatus(500);
 	}

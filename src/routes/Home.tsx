@@ -74,7 +74,7 @@ export default function Home() {
 			</form>
 			<span>Response:</span>
 			<br />
-			{String(response["email"])}
+			{JSON.stringify(response)}
 			<Dialog onClose={handleClose} open={open}>
 				<Button onClick={submit}>Submit</Button>
 				<Button onClick={handleClose}>Close</Button>
