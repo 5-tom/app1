@@ -3,7 +3,7 @@
 	publish = "dist"
 
 [functions]
-	external_node_modules = ["@clerk/clerk-sdk-node", "cookies", "dotenv", "express", "helmet", "jsonwebtoken", "serverless-http", "multer"]
+	external_node_modules = ["@clerk/fastify", "@fastify/mongodb", "@fastify/multipart", "@fastify/swagger", "@fastify/swagger-ui", "cookies", "dotenv", "fastify", "fastify-plugin", "fastify-type-provider-zod", "jsonwebtoken", "serverless-http", "zod"]
 	node_bundler = "esbuild"
 
 [[redirects]]

@@ -1,28 +1,48 @@
+import fastifyMultipart from "@fastify/multipart";
 import "dotenv/config";
-import { Router } from "express";
-import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
-import multer from "multer";
-import mongoose from "mongoose";
-import Email from "../models/Email";
+import { clerkPlugin, getAuth } from "@clerk/fastify";
 
-if (!process.env.DATABASE_URL) throw new Error("Missing DATABASE_URL");
-mongoose.connect(process.env.DATABASE_URL);
+import {
+	serializerCompiler,
+	validatorCompiler
+	// ZodTypeProvider
+} from "fastify-type-provider-zod";
+import z from "zod";
 
-const router = Router();
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-router.use(ClerkExpressRequireAuth());
-router.post("/", multer().none(), async function (req, res) {
-	try {
-		const { email } = req.body;
-		const newDoc = new Email({
-			email
-		});
-		const a = await newDoc.save();
-		console.log(a);
-		return res.send(a);
-	} catch {
-		return res.sendStatus(500);
+import dbConnector from "../our-db-connector.js";
+
+const FORM_SCHEMA = z.object({ email: z.string().email() });
+
+const opts = {
+	schema: {
+		consumes: ["multipart/form-data"],
+		body: FORM_SCHEMA
+	},
+	preValidation: (req: FastifyRequest, reply: FastifyReply, done) => {
+		const auth = getAuth(req);
+		if (!auth.userId) {
+			return reply.code(403).send();
+		}
+		done();
 	}
-});
+};
 
-export default router;
+async function routes(fastify: FastifyInstance) {
+	fastify.register(dbConnector);
+
+	fastify.register(fastifyMultipart, { attachFieldsToBody: "keyValues" });
+
+	fastify.setValidatorCompiler(validatorCompiler);
+	fastify.setSerializerCompiler(serializerCompiler);
+
+	fastify.register(clerkPlugin, { hookName: "onRequest" });
+	fastify.post("/form", opts, async (req, reply) => {
+		const collection = fastify.mongo.db.collection("test_collection");
+		const result = await collection.insertOne({ email: req.body.email });
+		return result;
+	});
+}
+
+export default routes;

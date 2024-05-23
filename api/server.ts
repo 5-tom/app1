@@ -1,14 +1,34 @@
-import express from "express";
+import Fastify from "fastify";
 import serverless from "serverless-http";
-import helmet from "helmet";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
+import { jsonSchemaTransform } from "fastify-type-provider-zod";
 
-import api from "./routes/api";
+import form from "./routes/form.js";
+import clerk from "./routes/clerk.js";
 
-const app = express();
+const fastify = Fastify({
+	logger: true
+});
 
-app.use(helmet());
+await fastify.register(fastifySwagger, {
+	transform: jsonSchemaTransform
+});
 
-app.use("/api", api);
+await fastify.register(fastifySwaggerUi, {
+	routePrefix: "/docs"
+});
 
-app.listen(3000, () => console.log("running on 3000"));
-export const handler = serverless(app);
+fastify.register(form, { prefix: "/api" });
+fastify.register(clerk, { prefix: "/api" });
+
+await fastify.ready();
+fastify.swagger();
+
+fastify.listen({ port: 3000 }, function (err, address) {
+	if (err) {
+		fastify.log.error(err);
+		process.exit(1);
+	}
+});
+export const handler = serverless(fastify);

@@ -2,12 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
+import "@fontsource/jetbrains-mono";
 
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import Root from "./routes/root";
 import Admin, { loader as adminLoader } from "./routes/Admin";
 import Home from "./routes/Home";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+const theme = createTheme({
+	typography: {
+		fontFamily: ["JetBrains Mono"].join(",")
+	}
+});
 
 const router = createBrowserRouter([
 	{
@@ -40,9 +48,18 @@ const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
-		<ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-			<RouterProvider router={router} />
-		</ClerkProvider>
+		<ThemeProvider theme={theme}>
+			<ClerkProvider
+				publishableKey={PUBLISHABLE_KEY}
+				appearance={{
+					variables: {
+						fontFamily: "JetBrains Mono"
+					}
+				}}
+			>
+				<RouterProvider router={router} />
+			</ClerkProvider>
+		</ThemeProvider>
 	</React.StrictMode>
 );
 
