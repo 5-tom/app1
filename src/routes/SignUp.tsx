@@ -1,19 +1,12 @@
 import {
 	ClerkLoaded,
 	ClerkLoading,
-	SignUp as ClerkSignUp
+	SignUp as ClerkSignUp,
 } from "@clerk/clerk-react";
 
 export default function SignUp() {
 	return (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				height: "calc(100vh - 40px)"
-			}}
-		>
+		<div className="grid h-full place-content-center">
 			<ClerkLoading>Loading...</ClerkLoading>
 			<ClerkLoaded>
 				<ClerkSignUp />

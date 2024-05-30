@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
 import "@fontsource/jetbrains-mono";
+import { defineConfig } from "unocss";
+import presetWind from "@unocss/preset-wind";
 
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
@@ -10,21 +12,19 @@ import Root from "./routes/root";
 import Admin, { loader as adminLoader } from "./routes/Admin";
 import Home from "./routes/Home";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-const theme = createTheme({
-	typography: {
-		fontFamily: ["JetBrains Mono"].join(",")
-	}
+import "virtual:uno.css";
+export default defineConfig({
+	presets: [presetWind()],
 });
 
 const router = createBrowserRouter([
 	{
 		path: "sign-in",
-		element: <SignIn />
+		element: <SignIn />,
 	},
 	{
 		path: "sign-up",
-		element: <SignUp />
+		element: <SignUp />,
 	},
 	{
 		element: <Root />,
@@ -33,36 +33,34 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Home />,
-				index: true
+				index: true,
 			},
 			{
 				path: "/admin",
 				element: <Admin />,
-				loader: adminLoader
-			}
-		]
-	}
+				loader: adminLoader,
+			},
+		],
+	},
 ]);
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
-		<ThemeProvider theme={theme}>
-			<ClerkProvider
-				publishableKey={PUBLISHABLE_KEY}
-				appearance={{
-					variables: {
-						fontFamily: "JetBrains Mono"
-					}
-				}}
-			>
-				<RouterProvider router={router} />
-			</ClerkProvider>
-		</ThemeProvider>
-	</React.StrictMode>
+		<ClerkProvider
+			publishableKey={PUBLISHABLE_KEY}
+			appearance={{
+				variables: {
+					fontFamily: "JetBrains Mono",
+				},
+			}}
+		>
+			<RouterProvider router={router} />
+		</ClerkProvider>
+	</React.StrictMode>,
 );
 
 function ErrorPage() {
-	return <h3 style={{ fontStyle: "italic" }}>Error</h3>;
+	return <h3 className="italic">Error</h3>;
 }

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Button, Dialog, TextField } from "@mui/material";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { parseFormSafe } from "zodix";
 import { useAuth } from "@clerk/clerk-react";
@@ -7,22 +6,22 @@ import { useAuth } from "@clerk/clerk-react";
 export default function Home() {
 	const { getToken } = useAuth();
 
-	const [open, setOpen] = useState(false);
 	const [form, setForm] = useState({
 		action: "",
 		data: new FormData(),
-		schema: z.object({})
+		schema: z.object({}),
 	});
 	const initErrors: {
 		[key: string]: string | null;
 	} = {
-		email: null
+		email: null,
+		foo: null,
 	};
 	const [errors, setErrors] = useState(initErrors);
 	const [response, setResponse] = useState("");
 
 	function handleClose() {
-		setOpen(false);
+		ref.current?.close();
 	}
 
 	async function submit() {
@@ -31,54 +30,65 @@ export default function Home() {
 		if (!result.success) {
 			const fResult: { [key: string]: Array<string> } =
 				result.error.flatten().fieldErrors;
-			const zErrors = initErrors;
+			const zErrors = structuredClone(initErrors);
 			for (const key in fResult) {
 				zErrors[key] = fResult[key][0];
 			}
 			setErrors(zErrors);
-			setOpen(false);
+			// 'Modal dialog boxes interrupt interaction with the rest of the page'. .reportValidity() doesn't work unless the modal dialog box is closed.
+			ref.current?.close();
+			for (const key in zErrors) {
+				document
+					.getElementsByName(key)[0]
+					.setCustomValidity(zErrors[key] ? zErrors[key] : "");
+			}
+			ref2.current?.reportValidity();
 			return;
 		}
 		fetch(form.action, {
 			method: "post",
 			body: form.data,
-			headers: { Authorization: `Bearer ${await getToken()}` }
+			headers: { Authorization: `Bearer ${await getToken()}` },
 		}).then(async function (res) {
 			setResponse(await res.json());
 		});
-		setOpen(false);
+		ref.current?.close();
 	}
+
+	const ref = useRef<HTMLDialogElement>(null);
+	const ref2 = useRef<HTMLFormElement>(null);
 
 	return (
 		<>
 			<span>Home</span>
 			<form
+				ref={ref2}
+				noValidate
 				onSubmit={function (e) {
 					e.preventDefault();
 					setForm({
 						action: "/api/form",
 						data: new FormData(e.currentTarget),
-						schema: z.object({ email: z.string().email() })
+						schema: z.object({
+							email: z.string().email(),
+							foo: z.string().min(2),
+						}),
 					});
-					setOpen(true);
+					ref.current?.showModal();
 				}}
 			>
-				<TextField
-					name="email"
-					required
-					error={errors.email ? true : false}
-					helperText={errors.email ?? errors.email}
-					placeholder="email"
-				/>
-				<Button type="submit">Submit</Button>
+				<input name="email" placeholder="email" />
+				<br />
+				<input name="foo" placeholder="bar" />
+				<button type="submit">Submit</button>
 			</form>
 			<span>Response:</span>
 			<br />
 			{JSON.stringify(response)}
-			<Dialog onClose={handleClose} open={open}>
-				<Button onClick={submit}>Submit</Button>
-				<Button onClick={handleClose}>Close</Button>
-			</Dialog>
+			<dialog ref={ref}>
+				<button onClick={submit}>Submit</button>
+				<button onClick={handleClose}>Close</button>
+			</dialog>
 		</>
 	);
 }

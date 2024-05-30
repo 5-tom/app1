@@ -32,13 +32,13 @@ export default function Admin() {
 	if (admin) {
 		return (
 			<>
-				<h3 style={{ fontStyle: "italic" }}>Admin</h3>
+				<h3 className="italic">Admin</h3>
 				<button
 					onClick={async () => {
 						fetch("/api/bar", {
 							headers: {
-								Authorization: `Bearer ${await getToken()}`
-							}
+								Authorization: `Bearer ${await getToken()}`,
+							},
 						});
 					}}
 				>

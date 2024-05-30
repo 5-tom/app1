@@ -4,10 +4,9 @@ import {
 	SignedIn,
 	SignedOut,
 	useUser,
-	UserButton
+	UserButton,
 } from "@clerk/clerk-react";
 import { Outlet } from "react-router-dom";
-import Snackbar from "@mui/material/Snackbar";
 
 import Nav from "../components/Nav";
 
@@ -19,7 +18,7 @@ export default function Root() {
 	const [open, setOpen] = useState(false);
 	const toast = {
 		open,
-		setOpen
+		setOpen,
 	};
 
 	useEffect(() => {
@@ -27,6 +26,13 @@ export default function Root() {
 			setAdmin(true);
 		}
 	});
+
+	useEffect(() => {
+		if (open)
+			setTimeout(() => {
+				setOpen(false);
+			}, 1000);
+	}, [open]);
 
 	return (
 		<>
@@ -37,14 +43,7 @@ export default function Root() {
 				<Nav admin={admin} toast={toast} />
 				<UserButton />
 				<Outlet context={{ admin, toast }} />
-				<Snackbar
-					open={open}
-					autoHideDuration={1000}
-					message="Access denied"
-					onClose={function () {
-						setOpen(false);
-					}}
-				/>
+				<dialog open={open}>Access denied</dialog>
 			</SignedIn>
 		</>
 	);

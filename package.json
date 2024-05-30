@@ -11,17 +11,20 @@
 		"e2e": "npx playwright test",
 		"test:coverage": "vitest --exclude tests/e2e --coverage --run"
 	},
+	"prettier": {
+		"useTabs": true,
+		"plugins": [
+			"prettier-plugin-tailwindcss"
+		]
+	},
 	"dependencies": {
 		"@clerk/clerk-react": "latest",
 		"@clerk/fastify": "^1.0.10",
-		"@emotion/react": "latest",
-		"@emotion/styled": "latest",
 		"@fastify/mongodb": "^8.0.0",
 		"@fastify/multipart": "^8.2.0",
 		"@fastify/swagger": "^8.14.0",
 		"@fastify/swagger-ui": "^3.0.0",
 		"@fontsource/jetbrains-mono": "^5.0.20",
-		"@mui/material": "latest",
 		"cookies": "latest",
 		"dotenv": "latest",
 		"fastify": "^4.27.0",
@@ -41,13 +44,17 @@
 		"@types/cookies": "latest",
 		"@types/jsonwebtoken": "latest",
 		"@types/node": "^20.12.12",
+		"@unocss/preset-wind": "^0.60.3",
 		"@vitejs/plugin-react": "latest",
 		"@vitest/coverage-istanbul": "latest",
 		"esbuild": "latest",
 		"jsdom": "latest",
 		"msw": "latest",
 		"nodemon": "latest",
+		"prettier": "^3.2.5",
+		"prettier-plugin-tailwindcss": "^0.6.0",
 		"typescript": "latest",
+		"unocss": "^0.60.3",
 		"vite": "latest",
 		"vitest": "latest"
 	}
