@@ -13,7 +13,7 @@ import Admin, { loader as adminLoader } from "./routes/Admin";
 import Home from "./routes/Home";
 
 import "virtual:uno.css";
-export default defineConfig({
+defineConfig({
 	presets: [presetWind()],
 });
 
