@@ -1,0 +1,23 @@
+{
+	"type": "module",
+	"dependencies": {
+		"@clerk/fastify": "^1.0.10",
+		"@fastify/mongodb": "^8.0.0",
+		"@fastify/multipart": "^8.2.0",
+		"@fastify/swagger": "^8.14.0",
+		"@fastify/swagger-ui": "^3.0.0",
+		"cookies": "latest",
+		"dotenv": "latest",
+		"fastify": "^4.27.0",
+		"fastify-plugin": "^4.5.1",
+		"fastify-type-provider-zod": "^1.2.0",
+		"jsonwebtoken": "latest",
+		"serverless-http": "latest",
+		"zod": "latest"
+	},
+	"devDependencies": {
+		"@types/cookies": "latest",
+		"@types/jsonwebtoken": "latest",
+		"@types/node": "^20.12.12"
+	}
+}

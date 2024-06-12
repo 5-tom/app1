@@ -16,4 +16,7 @@ export default defineConfig({
 			reporter: ["html"],
 		},
 	},
+	// build: {
+	// 	sourcemap: true,
+	// },
 });

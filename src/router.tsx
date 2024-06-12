@@ -3,19 +3,13 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
 import "@fontsource/jetbrains-mono";
-import { defineConfig } from "unocss";
-import presetWind from "@unocss/preset-wind";
+import "virtual:uno.css";
 
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import Root from "./routes/root";
 import Admin, { loader as adminLoader } from "./routes/Admin";
 import Home from "./routes/Home";
-
-import "virtual:uno.css";
-defineConfig({
-	presets: [presetWind()],
-});
 
 const router = createBrowserRouter([
 	{
