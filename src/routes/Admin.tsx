@@ -15,17 +15,11 @@ export default function Admin() {
 	const { admin, toast }: { [key: string]: any } = useOutletContext();
 	const navigate = useNavigate();
 
-	const [rootDone, setRootDone] = useState(false);
-
 	useEffect(() => {
-		if (rootDone && !admin) {
+		if (!admin) {
 			toast.setOpen(true);
 			navigate("/");
 		}
-	}, [rootDone, admin]);
-
-	useEffect(() => {
-		setRootDone(true);
 	}, [admin]);
 
 	const { getToken } = useAuth();

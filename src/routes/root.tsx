@@ -9,23 +9,18 @@ import {
 import { Outlet } from "react-router-dom";
 
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 export default function Root() {
 	const { user } = useUser();
 
-	const [admin, setAdmin] = useState(false);
+	const admin = user?.publicMetadata.role === "admin";
 
 	const [open, setOpen] = useState(false);
 	const toast = {
 		open,
 		setOpen,
 	};
-
-	useEffect(() => {
-		if (user?.publicMetadata.role === "admin") {
-			setAdmin(true);
-		}
-	});
 
 	useEffect(() => {
 		if (open)
@@ -44,6 +39,7 @@ export default function Root() {
 				<UserButton />
 				<Outlet context={{ admin, toast }} />
 				<dialog open={open}>Access denied</dialog>
+				<Footer />
 			</SignedIn>
 		</>
 	);

@@ -45,14 +45,22 @@ export default function Home() {
 			ref2.current?.reportValidity();
 			return;
 		}
-		fetch(form.action, {
-			method: "post",
-			body: form.data,
-			headers: { Authorization: `Bearer ${await getToken()}` },
-		}).then(async function (res) {
+
+		try {
+			ref.current?.close();
+			const res = await fetch(form.action, {
+				method: "post",
+				body: form.data,
+				headers: { Authorization: `Bearer ${await getToken()}` },
+			});
+			if (!res.ok) {
+				throw new Error(res.statusText);
+			}
 			setResponse(await res.json());
-		});
-		ref.current?.close();
+			ref2.current?.reset();
+		} catch (err) {
+			alert(err);
+		}
 	}
 
 	const ref = useRef<HTMLDialogElement>(null);

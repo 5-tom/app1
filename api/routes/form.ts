@@ -4,7 +4,7 @@ import { clerkPlugin, getAuth } from "@clerk/fastify";
 
 import {
 	serializerCompiler,
-	validatorCompiler
+	validatorCompiler,
 	// ZodTypeProvider
 } from "fastify-type-provider-zod";
 import z from "zod";
@@ -18,7 +18,7 @@ const FORM_SCHEMA = z.object({ email: z.string().email() });
 const opts = {
 	schema: {
 		consumes: ["multipart/form-data"],
-		body: FORM_SCHEMA
+		body: FORM_SCHEMA,
 	},
 	preValidation: (req: FastifyRequest, reply: FastifyReply, done) => {
 		const auth = getAuth(req);
@@ -26,7 +26,7 @@ const opts = {
 			return reply.code(403).send();
 		}
 		done();
-	}
+	},
 };
 
 async function routes(fastify: FastifyInstance) {

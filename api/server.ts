@@ -8,15 +8,15 @@ import form from "./routes/form.js";
 import clerk from "./routes/clerk.js";
 
 const fastify = Fastify({
-	logger: true
+	logger: true,
 });
 
 await fastify.register(fastifySwagger, {
-	transform: jsonSchemaTransform
+	transform: jsonSchemaTransform,
 });
 
 await fastify.register(fastifySwaggerUi, {
-	routePrefix: "/docs"
+	routePrefix: "/api/docs",
 });
 
 fastify.register(form, { prefix: "/api" });
