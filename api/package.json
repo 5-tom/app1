@@ -2,6 +2,7 @@
 	"type": "module",
 	"dependencies": {
 		"@clerk/fastify": "^1.0.10",
+		"@fastify/helmet": "^11.1.1",
 		"@fastify/mongodb": "^8.0.0",
 		"@fastify/multipart": "^8.2.0",
 		"@fastify/swagger": "^8.14.0",
